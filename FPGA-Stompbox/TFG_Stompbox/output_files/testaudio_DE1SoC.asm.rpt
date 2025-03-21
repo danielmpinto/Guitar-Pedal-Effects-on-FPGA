@@ -1,6 +1,6 @@
 Assembler report for testaudio_DE1SoC
-Thu Aug 31 21:16:31 2017
-Quartus Prime Version 15.1.0 Build 185 10/21/2015 SJ Standard Edition
+Thu Mar 20 13:59:51 2025
+Quartus Prime Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
 
 
 ---------------------
@@ -10,7 +10,7 @@ Quartus Prime Version 15.1.0 Build 185 10/21/2015 SJ Standard Edition
   2. Assembler Summary
   3. Assembler Settings
   4. Assembler Generated Files
-  5. Assembler Device Options: C:/altera/TFG_Stompbox/output_files/testaudio_DE1SoC.sof
+  5. Assembler Device Options: testaudio_DE1SoC.sof
   6. Assembler Messages
 
 
@@ -18,31 +18,31 @@ Quartus Prime Version 15.1.0 Build 185 10/21/2015 SJ Standard Edition
 ----------------
 ; Legal Notice ;
 ----------------
-Copyright (C) 1991-2015 Altera Corporation. All rights reserved.
-Your use of Altera Corporation's design tools, logic functions 
-and other software and tools, and its AMPP partner logic 
+Copyright (C) 2024  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
 functions, and any output files from any of the foregoing 
 (including device programming or simulation files), and any 
 associated documentation or information are expressly subject 
-to the terms and conditions of the Altera Program License 
-Subscription Agreement, the Altera Quartus Prime License Agreement,
-the Altera MegaCore Function License Agreement, or other 
-applicable license agreement, including, without limitation, 
-that your use is for the sole purpose of programming logic 
-devices manufactured by Altera and sold by Altera or its 
-authorized distributors.  Please refer to the applicable 
-agreement for further details.
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details, at
+https://fpgasoftware.intel.com/eula.
 
 
 
 +---------------------------------------------------------------+
 ; Assembler Summary                                             ;
 +-----------------------+---------------------------------------+
-; Assembler Status      ; Successful - Thu Aug 31 21:16:31 2017 ;
+; Assembler Status      ; Successful - Thu Mar 20 13:59:51 2025 ;
 ; Revision Name         ; testaudio_DE1SoC                      ;
 ; Top-level Entity Name ; testaudio_DE1SoC                      ;
 ; Family                ; Cyclone V                             ;
-; Device                ; 5CSEMA5F31C6                          ;
+; Device                ; 5CSXFC6D6F31C6                        ;
 +-----------------------+---------------------------------------+
 
 
@@ -53,24 +53,23 @@ agreement for further details.
 +--------+---------+---------------+
 
 
-+----------------------------------------------------------+
-; Assembler Generated Files                                ;
-+----------------------------------------------------------+
-; File Name                                                ;
-+----------------------------------------------------------+
-; C:/altera/TFG_Stompbox/output_files/testaudio_DE1SoC.sof ;
-+----------------------------------------------------------+
++------------------------------------------------------------------------------------------------------------------+
+; Assembler Generated Files                                                                                        ;
++------------------------------------------------------------------------------------------------------------------+
+; File Name                                                                                                        ;
++------------------------------------------------------------------------------------------------------------------+
+; /home/daniel/workspace/Guitar-Pedal-Effects-on-FPGA/FPGA-Stompbox/TFG_Stompbox/output_files/testaudio_DE1SoC.sof ;
++------------------------------------------------------------------------------------------------------------------+
 
 
-+------------------------------------------------------------------------------------+
-; Assembler Device Options: C:/altera/TFG_Stompbox/output_files/testaudio_DE1SoC.sof ;
-+----------------+-------------------------------------------------------------------+
-; Option         ; Setting                                                           ;
-+----------------+-------------------------------------------------------------------+
-; Device         ; 5CSEMA5F31C6                                                      ;
-; JTAG usercode  ; 0x00B300A8                                                        ;
-; Checksum       ; 0x00B300A8                                                        ;
-+----------------+-------------------------------------------------------------------+
++------------------------------------------------+
+; Assembler Device Options: testaudio_DE1SoC.sof ;
++----------------+-------------------------------+
+; Option         ; Setting                       ;
++----------------+-------------------------------+
+; JTAG usercode  ; 0x00B32D34                    ;
+; Checksum       ; 0x00B32D34                    ;
++----------------+-------------------------------+
 
 
 +--------------------+
@@ -78,14 +77,15 @@ agreement for further details.
 +--------------------+
 Info: *******************************************************************
 Info: Running Quartus Prime Assembler
-    Info: Version 15.1.0 Build 185 10/21/2015 SJ Standard Edition
-    Info: Processing started: Thu Aug 31 21:16:11 2017
+    Info: Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
+    Info: Processing started: Thu Mar 20 13:59:44 2025
 Info: Command: quartus_asm --read_settings_files=off --write_settings_files=off testaudio_DE1SoC -c testaudio_DE1SoC
+Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (115030): Assembler is generating device programming files
-Info: Quartus Prime Assembler was successful. 0 errors, 0 warnings
-    Info: Peak virtual memory: 892 megabytes
-    Info: Processing ended: Thu Aug 31 21:16:31 2017
-    Info: Elapsed time: 00:00:20
-    Info: Total CPU time (on all processors): 00:00:18
+Info: Quartus Prime Assembler was successful. 0 errors, 1 warning
+    Info: Peak virtual memory: 509 megabytes
+    Info: Processing ended: Thu Mar 20 13:59:51 2025
+    Info: Elapsed time: 00:00:07
+    Info: Total CPU time (on all processors): 00:00:07
 
 
