@@ -5,7 +5,7 @@ use ieee.std_logic_signed.all;
 
 entity testaudio_DE1SoC is 
  port(		CLOCK_50 	:  in  std_logic;
-		KEY 		:  in  std_logic_vector(0 downto 0);
+		KEY 		:  in  std_logic_vector(3 downto 0);
 		--====AUDIO====--
 		AUD_XCK 	:  out std_logic;
 		AUD_BCLK 	:  in  std_logic;
@@ -30,6 +30,9 @@ entity testaudio_DE1SoC is
 		HEX4 : OUT STD_LOGIC_VECTOR(0 TO 6);
 		HEX5 : OUT STD_LOGIC_VECTOR(0 TO 6)	);
 end testaudio_DE1SoC;
+
+
+
 
 architecture a of testaudio_DE1SoC is 
 
@@ -147,6 +150,11 @@ architecture a of testaudio_DE1SoC is
 	--TREMOLO FX SIGNALS
 	signal velocidad, ataque: std_logic_vector(15 downto 0);
 	signal onda	  	: std_logic_vector(1 downto 0);
+	signal btn2 : std_logic;
+	Signal distortion_value : integer range 0 to 256;
+	signal edge_detect : std_logic_vector( 1 downto 0 );
+	Signal max_value : integer range 0 to 32;
+
 
 begin 
 	
@@ -201,22 +209,63 @@ begin
 
 -------------Varlores potenciometros-------------
 
-		multiplier<=std_logic_vector(resize(signed('0' & ch0(11 downto 4) & "000"),16));
-		pot_distor<=std_logic_vector(resize(signed('0' & ch1(11 downto 4) & "000"),16));
-		velocidad <= std_logic_vector(signed('0' & ch2(11 downto 4)& "0000000"));
-		ataque <= std_logic_vector(signed('0' & ch3(11 downto 4)& "0000000"));
+--		multiplier<=std_logic_vector(resize(signed('0' & ch0(11 downto 4) & "000"),16));
+--		multiplier<=std_logic_vector(to_unsigned(distortion_value,16));
+		pot_distor<=std_logic_vector(resize(signed('0' & SW(9 downto 0) & "11111"),16));
+		velocidad <= std_logic_vector(signed('0' & SW(1 downto 0) & "1111110000000"));
+		ataque <= std_logic_vector(signed('0' & SW(1 downto 0) & "1111110000000"));
 
 -------------DISTOR-------------
-		LEDR <= "00" & ch0(11 downto 4);
+		
+		
+		-- botao da distorcao
+		btn2 <= KEY(2);
+		aumenta_distorcao: process (btn2) 
+		begin
+			
+			if (not btn2 = '1') then
+				while (not btn2 = '1') loop 
+				end loop;
+				if distortion_value = 250 then
+					distortion_value <= 0;
+				else
+					distortion_value <= distortion_value + 25;
+				end if;  
+			end if;
+		end process aumenta_distorcao;
+		
+		
+		
+		mostra_display: process (distortion_value)
+		begin
+		case distortion_value is
+			 when 0 => HEX4 <="0000001"; HEX5<="0000001";  -- '0'
+			 when 25 => HEX4 <="1001111";HEX5<="0000001";  -- '1'
+			 when 50=> HEX4 <="0010010";HEX5<="0000001";  -- '2'
+			 when 75=> HEX4 <="0000110";HEX5<="0000001";  -- '3'
+			 when 100=> HEX4 <="1001100";HEX5<="0000001";  -- '4'
+			 when 125=> HEX4 <="0100100";HEX5<="0000001";  -- '5'
+			 when 150=> HEX4 <="0100000";HEX5<="0000001";  -- '6'
+			 when 175=> HEX4 <="0001111";HEX5<="0000001";  -- '7'
+			 when 200=> HEX4 <="0000000";HEX5<="0000001";  -- '8'
+			 when 225=> HEX4 <="0000100";HEX5<="0000001";  -- '9'
+			 when 250=> HEX5 <="1001111" ; HEX4 <="0000001";  -- '10'
+		 --nothing is displayed when a number more than 9 is given as input.
+			 when others=> LEDR(9)<= '1';
+		end case;
+		end process mostra_display;
+--		
+		
+--		LEDR <= SW(9 downto 0);
 		--Texto: Dist
-		HEX5<="0000001";
-		HEX4<="1111001";
-		HEX3<="0100100";
-		HEX2<="1110000";
-		HEX1<="1111111";
-		HEX0<="1111111";
-		multiplier<=std_logic_vector(resize(signed('0' & ch0(11 downto 4) & "000"),16));
-		pot_distor<=std_logic_vector(resize(signed('0' & ch1(11 downto 4) & "000"),16));
+--		HEX5<="0000001";
+--		HEX4<="1111001";
+--		HEX3<="0100100";
+--		HEX2<="1110000";
+--		HEX1<="1111111";
+--		HEX0<="1111111";
+--		multiplier<=std_logic_vector(resize('0' & to_unsigned(distortion_value,1023) & "00000");
+		pot_distor<=std_logic_vector(resize(signed('0' & SW(9 downto 0) & "11111"),16));
 		inst5 : distortion
 		port map (	
 				sample_in => sample_in,
