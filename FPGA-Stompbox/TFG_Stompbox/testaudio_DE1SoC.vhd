@@ -150,15 +150,22 @@ architecture a of testaudio_DE1SoC is
 	--TREMOLO FX SIGNALS
 	signal velocidad, ataque: std_logic_vector(15 downto 0);
 	signal onda	  	: std_logic_vector(1 downto 0);
+	signal btn1 : std_logic;
 	signal btn2 : std_logic;
-	Signal distortion_value : integer range 0 to 256;
+	signal btn3 : std_logic;
+	signal btn4 : std_logic;
+	Signal distortion_value : integer range 0 to 255;
+	Signal volume_value : integer range 0 to 255;
+	Signal velocidade_value : integer range 0 to 255;
+	Signal ataque_value : integer range 0 to 255;
 	signal edge_detect : std_logic_vector( 1 downto 0 );
 	Signal max_value : integer range 0 to 32;
 
 
 begin 
 	
-	reset <= not(KEY(0));
+--	reset <= not(KEY(0));
+	reset <= null;
 	
 	inst1: au_setup
 		generic map	(SAMPLE_RATE => 3)
@@ -218,6 +225,22 @@ begin
 -------------DISTOR-------------
 		
 		
+		-- botao volume
+		btn1 <= KEY(3);
+		aumenta_volume: process (btn1) 
+		begin
+			
+			if (not btn1 = '1') then
+				while (not btn1 = '1') loop 
+				end loop;
+				if volume_value = 250 then
+					volume_value <= 0;
+				else
+					volume_value <= volume_value + 25;
+				end if;  
+			end if;
+		end process aumenta_volume;
+		
 		-- botao da distorcao
 		btn2 <= KEY(2);
 		aumenta_distorcao: process (btn2) 
@@ -234,10 +257,59 @@ begin
 			end if;
 		end process aumenta_distorcao;
 		
-		
-		
-		mostra_display: process (distortion_value)
+		-- botao da velocidade
+		btn3 <= KEY(1);
+		aumenta_velocidade: process (btn3) 
 		begin
+			
+			if (not btn3 = '1') then
+				while (not btn3 = '1') loop 
+				end loop;
+				if velocidade_value = 250 then
+					velocidade_value <= 0;
+				else
+					velocidade_value <= velocidade_value + 25;
+				end if;  
+			end if;
+		end process aumenta_velocidade;
+		
+		-- botao da ataque
+		btn4 <= KEY(0);
+		aumenta_ataque: process (btn4) 
+		begin
+			
+			if (not btn4 = '1') then
+				while (not btn4 = '1') loop 
+				end loop;
+				if ataque_value = 250 then
+					ataque_value <= 0;
+				else
+					ataque_value <= ataque_value + 25;
+				end if;  
+			end if;
+		end process aumenta_ataque;
+		
+		
+		
+		mostra_display: process (volume_value, distortion_value, velocidade_value, ataque_value)
+		begin
+		case volume_value is
+			 when 0 => LEDR <= "0000000000";  -- '0'
+			 when 25 => LEDR <="0000000001";  -- '1'
+			 when 50 => LEDR <="0000000011";  -- '2'
+			 when 75 => LEDR <="0000000111";  -- '3'
+			 when 100 => LEDR <="0000001111";  -- '4'
+			 when 125 => LEDR <="0000011111";  -- '5'
+			 when 150 => LEDR <="0000111111";  -- '6'
+			 when 175 => LEDR <="0001111111";  -- '7'
+			 when 200 => LEDR <="0011111111";  -- '8'
+			 when 225 => LEDR <="0111111111";  -- '9'
+			 when 250 => LEDR <="1111111111";  -- '10'
+			 when others=> null;
+		end case;
+		
+		
+		
 		case distortion_value is
 			 when 0 => HEX4 <="0000001"; HEX5<="0000001";  -- '0'
 			 when 25 => HEX4 <="1001111";HEX5<="0000001";  -- '1'
@@ -251,8 +323,41 @@ begin
 			 when 225=> HEX4 <="0000100";HEX5<="0000001";  -- '9'
 			 when 250=> HEX5 <="1001111" ; HEX4 <="0000001";  -- '10'
 		 --nothing is displayed when a number more than 9 is given as input.
-			 when others=> LEDR(9)<= '1';
+			 when others=> null;
 		end case;
+		
+		case velocidade_value is
+			 when 0 => HEX2 <="0000001"; HEX3<="0000001";  -- '0'
+			 when 25 => HEX2 <="1001111";HEX3<="0000001";  -- '1'
+			 when 50=> HEX2 <="0010010";HEX3<="0000001";  -- '2'
+			 when 75=> HEX2 <="0000110";HEX3<="0000001";  -- '3'
+			 when 100=> HEX2 <="1001100";HEX3<="0000001";  -- '4'
+			 when 125=> HEX2 <="0100100";HEX3<="0000001";  -- '5'
+			 when 150=> HEX2 <="0100000";HEX3<="0000001";  -- '6'
+			 when 175=> HEX2 <="0001111";HEX3<="0000001";  -- '7'
+			 when 200=> HEX2 <="0000000";HEX3<="0000001";  -- '8'
+			 when 225=> HEX2 <="0000100";HEX3<="0000001";  -- '9'
+			 when 250=> HEX3 <="1001111" ; HEX2 <="0000001";  -- '10'
+		 --nothing is displayed when a number more than 9 is given as input.
+			 when others=> null;
+		end case;
+		
+		case ataque_value is
+			 when 0 => HEX0 <="0000001"; HEX1<="0000001";  -- '0'
+			 when 25 => HEX0 <="1001111";HEX1<="0000001";  -- '1'
+			 when 50=> HEX0 <="0010010";HEX1<="0000001";  -- '2'
+			 when 75=> HEX0 <="0000110";HEX1<="0000001";  -- '3'
+			 when 100=> HEX0 <="1001100";HEX1<="0000001";  -- '4'
+			 when 125=> HEX0 <="0100100";HEX1<="0000001";  -- '5'
+			 when 150=> HEX0 <="0100000";HEX1<="0000001";  -- '6'
+			 when 175=> HEX0 <="0001111";HEX1<="0000001";  -- '7'
+			 when 200=> HEX0 <="0000000";HEX1<="0000001";  -- '8'
+			 when 225=> HEX0 <="0000100";HEX1<="0000001";  -- '9'
+			 when 250=> HEX1 <="1001111" ; HEX0 <="0000001";  -- '10'
+		 --nothing is displayed when a number more than 9 is given as input.
+			 when others=> null;
+		end case;
+		
 		end process mostra_display;
 --		
 		
