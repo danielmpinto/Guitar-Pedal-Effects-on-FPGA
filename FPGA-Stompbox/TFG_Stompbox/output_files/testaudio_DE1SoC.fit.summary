@@ -1,12 +1,12 @@
-Fitter Status : Successful - Sat Mar 29 12:04:11 2025
+Fitter Status : Successful - Mon Mar 31 19:18:49 2025
 Quartus Prime Version : 23.1std.1 Build 993 05/14/2024 SC Lite Edition
 Revision Name : testaudio_DE1SoC
 Top-level Entity Name : testaudio_DE1SoC
 Family : Cyclone V
 Device : 5CSXFC6D6F31C6
 Timing Models : Final
-Logic utilization (in ALMs) : 175 / 41,910 ( < 1 % )
-Total registers : 180
+Logic utilization (in ALMs) : 186 / 41,910 ( < 1 % )
+Total registers : 182
 Total pins : 79 / 499 ( 16 % )
 Total virtual pins : 0
 Total block memory bits : 0 / 5,662,720 ( 0 % )

@@ -217,10 +217,13 @@ begin
 -------------Varlores potenciometros-------------
 
 --		multiplier<=std_logic_vector(resize(signed('0' & ch0(11 downto 4) & "000"),16));
+
+
+		multiplier<=std_logic_vector(resize(signed('0' & to_unsigned(volume_value, 12) & "11111"),16));
 --		multiplier<=std_logic_vector(to_unsigned(distortion_value,16));
-		pot_distor<=std_logic_vector(resize(signed('0' & SW(9 downto 0) & "11111"),16));
-		velocidad <= std_logic_vector(signed('0' & SW(1 downto 0) & "1111110000000"));
-		ataque <= std_logic_vector(signed('0' & SW(1 downto 0) & "1111110000000"));
+		pot_distor<=std_logic_vector(resize(signed('0' & to_unsigned(distortion_value, 12)),16));
+		velocidad <= std_logic_vector(resize(signed('0' & to_unsigned(velocidade_value, 12)), 16));
+		ataque <= std_logic_vector(resize(signed('0' & to_unsigned(ataque_value, 12)), 16));
 
 -------------DISTOR-------------
 		
@@ -370,7 +373,8 @@ begin
 --		HEX1<="1111111";
 --		HEX0<="1111111";
 --		multiplier<=std_logic_vector(resize('0' & to_unsigned(distortion_value,1023) & "00000");
-		pot_distor<=std_logic_vector(resize(signed('0' & SW(9 downto 0) & "11111"),16));
+--		multiplier<=std_logic_vector(resize(signed('0' & to_unsigned(volume_value, 12) & "000"),16));
+--		pot_distor<=std_logic_vector(resize(signed('0' & to_unsigned(distortion_value, 12) & "000"),16));
 		inst5 : distortion
 		port map (	
 				sample_in => sample_in,
